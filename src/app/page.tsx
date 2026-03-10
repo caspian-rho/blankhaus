@@ -120,15 +120,7 @@ export default function Home() {
         }}
       >
         <div className="flex items-center justify-between px-5 md:px-10 py-4">
-          <a
-            href="#"
-            className="text-sm md:text-lg relative z-[60]"
-            style={{
-              color: menuOpen ? "var(--color-bone)" : "var(--color-charcoal)",
-              transition: "color 0.5s cubic-bezier(0.16, 1, 0.3, 1)",
-            }}
-            onClick={() => menuOpen && setMenuOpen(false)}
-          >
+          <a href="#" className="text-sm md:text-lg relative">
             <Logo />
           </a>
           {/* Desktop nav */}

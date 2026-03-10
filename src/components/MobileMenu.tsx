@@ -35,7 +35,7 @@ export default function MobileMenu({ open, setOpen }: MobileMenuProps) {
 
   const overlay = (
     <div
-      className="fixed inset-0 z-[55] md:hidden flex flex-col justify-center items-center"
+      className="fixed inset-0 z-[200] md:hidden flex flex-col justify-center items-center"
       style={{
         backgroundColor: "var(--color-charcoal)",
         opacity: open ? 1 : 0,
@@ -43,6 +43,24 @@ export default function MobileMenu({ open, setOpen }: MobileMenuProps) {
         transition: "opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1)",
       }}
     >
+      {/* Close button inside overlay — always tappable */}
+      <button
+        onClick={() => setOpen(false)}
+        className="absolute top-4 right-3 w-11 h-11 flex items-center justify-center"
+        aria-label="Close menu"
+      >
+        <div className="relative w-5 h-5 flex items-center justify-center">
+          <span
+            className="absolute w-5 h-[2px] rotate-45"
+            style={{ backgroundColor: "var(--color-bone)" }}
+          />
+          <span
+            className="absolute w-5 h-[2px] -rotate-45"
+            style={{ backgroundColor: "var(--color-bone)" }}
+          />
+        </div>
+      </button>
+
       <nav className="flex flex-col items-center gap-8">
         {links.map((link, i) => (
           <a
@@ -78,41 +96,35 @@ export default function MobileMenu({ open, setOpen }: MobileMenuProps) {
 
   return (
     <>
-      {/* Hamburger / X button */}
+      {/* Hamburger button — opens menu (lives in nav) */}
       <button
-        onClick={() => setOpen(!open)}
-        className="md:hidden relative z-[60] w-11 h-11 -mr-2 flex items-center justify-center"
-        aria-label={open ? "Close menu" : "Open menu"}
+        onClick={() => setOpen(true)}
+        className="md:hidden relative w-11 h-11 -mr-2 flex items-center justify-center"
+        aria-label="Open menu"
       >
         <div className="relative w-5 h-5 flex items-center justify-center">
           <span
             className="absolute w-5 h-[2px]"
             style={{
-              backgroundColor: open ? "var(--color-bone)" : "var(--color-charcoal)",
-              transform: open ? "rotate(45deg)" : "translateY(-4px)",
-              transition: "transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.5s cubic-bezier(0.16, 1, 0.3, 1)",
+              backgroundColor: "var(--color-charcoal)",
+              transform: "translateY(-4px)",
             }}
           />
           <span
             className="absolute w-5 h-[2px]"
-            style={{
-              backgroundColor: open ? "var(--color-bone)" : "var(--color-charcoal)",
-              opacity: open ? 0 : 1,
-              transition: "opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.5s cubic-bezier(0.16, 1, 0.3, 1)",
-            }}
+            style={{ backgroundColor: "var(--color-charcoal)" }}
           />
           <span
             className="absolute w-5 h-[2px]"
             style={{
-              backgroundColor: open ? "var(--color-bone)" : "var(--color-charcoal)",
-              transform: open ? "rotate(-45deg)" : "translateY(4px)",
-              transition: "transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.5s cubic-bezier(0.16, 1, 0.3, 1)",
+              backgroundColor: "var(--color-charcoal)",
+              transform: "translateY(4px)",
             }}
           />
         </div>
       </button>
 
-      {/* Portal the overlay to document.body so it escapes nav stacking context */}
+      {/* Overlay portaled to body — fully independent of nav stacking */}
       {mounted && createPortal(overlay, document.body)}
     </>
   );
