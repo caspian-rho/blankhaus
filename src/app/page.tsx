@@ -137,7 +137,7 @@ export default function Home() {
       </nav>
 
       {/* Hero Section */}
-      <section className="relative min-h-[100svh] flex flex-col justify-center border-b-[3px] border-charcoal overflow-hidden plaster-texture">
+      <section className="relative min-h-[85svh] md:min-h-[100svh] flex flex-col justify-center border-b-[3px] border-charcoal overflow-hidden plaster-texture">
         {/* Animated background shapes — desktop only */}
         <div className="hidden md:block absolute top-20 right-10 w-64 h-64 border border-charcoal/10 rounded-full animate-float" />
         <div
