@@ -112,15 +112,10 @@ export default function Home() {
 
       {/* Navigation */}
       <nav
-        className="fixed top-0 left-0 right-0 z-50"
+        className="fixed top-0 left-0 right-0 z-50 border-b-[3px] border-charcoal"
         style={{
-          borderBottom: menuOpen ? "none" : "3px solid var(--color-charcoal)",
-          backgroundColor: menuOpen
-            ? "transparent"
-            : scrollY > 100
-              ? "rgba(216, 211, 201, 0.95)"
-              : "transparent",
-          backdropFilter: !menuOpen && scrollY > 100 ? "blur(10px)" : "none",
+          backgroundColor: scrollY > 100 ? "rgba(216, 211, 201, 0.95)" : "transparent",
+          backdropFilter: scrollY > 100 ? "blur(10px)" : "none",
           transition: "background-color 0.5s ease, backdrop-filter 0.5s ease",
         }}
       >
