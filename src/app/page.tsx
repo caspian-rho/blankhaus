@@ -150,7 +150,7 @@ export default function Home() {
                 loaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
               }`}
             >
-              Los Angeles, CA &mdash; Est. 2024
+              Los Angeles, CA &mdash; Est. 2026
             </p>
             <div
               className={`w-10 md:w-16 h-[2px] bg-charcoal transition-all duration-1000 delay-200 ${
@@ -715,7 +715,7 @@ export default function Home() {
 
           <div className="mt-12 md:mt-20 pt-6 md:pt-8 border-t border-bone/10 flex flex-col md:flex-row justify-between items-start md:items-center gap-3 md:gap-4">
             <p className="text-[8px] md:text-[9px] tracking-[0.3em] md:tracking-[0.4em] uppercase text-bone/20">
-              &copy; 2024 Blankhaus. All rights reserved.
+              &copy; 2026 Blankhaus. All rights reserved.
             </p>
             <p className="text-[8px] md:text-[9px] tracking-[0.3em] md:tracking-[0.4em] uppercase text-bone/20">
               No shortcuts. No compromises. Just blanks.
