@@ -24,6 +24,7 @@ export default function Home() {
   const mouse = useMousePosition();
   const [scrollY, setScrollY] = useState(0);
   const [loaded, setLoaded] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
 
   useEffect(() => {
     setLoaded(true);
@@ -111,14 +112,26 @@ export default function Home() {
 
       {/* Navigation */}
       <nav
-        className="fixed top-0 left-0 right-0 z-50 border-b-[3px] border-charcoal transition-all duration-500"
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
+          menuOpen ? "border-b-0" : "border-b-[3px] border-charcoal"
+        }`}
         style={{
-          backgroundColor: scrollY > 100 ? "rgba(216, 211, 201, 0.95)" : "transparent",
-          backdropFilter: scrollY > 100 ? "blur(10px)" : "none",
+          backgroundColor: menuOpen
+            ? "transparent"
+            : scrollY > 100
+              ? "rgba(216, 211, 201, 0.95)"
+              : "transparent",
+          backdropFilter: !menuOpen && scrollY > 100 ? "blur(10px)" : "none",
         }}
       >
         <div className="flex items-center justify-between px-5 md:px-10 py-4">
-          <a href="#" className="text-sm md:text-lg relative z-50">
+          <a
+            href="#"
+            className={`text-sm md:text-lg relative z-[60] transition-colors duration-300 ${
+              menuOpen ? "text-bone" : "text-charcoal"
+            }`}
+            onClick={() => menuOpen && setMenuOpen(false)}
+          >
             <Logo />
           </a>
           {/* Desktop nav */}
@@ -130,7 +143,7 @@ export default function Home() {
             ))}
           </div>
           {/* Mobile hamburger */}
-          <MobileMenu />
+          <MobileMenu open={menuOpen} setOpen={setMenuOpen} />
         </div>
       </nav>
 
