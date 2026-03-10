@@ -7,6 +7,13 @@ export const metadata: Metadata = {
     "Premium cut and sewn t-shirt blanks. Made in Los Angeles. In-person consultation in Austin, TX.",
 };
 
+export const viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 1,
+  viewportFit: "cover" as const,
+};
+
 export default function RootLayout({
   children,
 }: Readonly<{

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 interface HorizontalScrollProps {
   children: React.ReactNode;
@@ -13,8 +13,18 @@ export default function HorizontalScroll({
 }: HorizontalScrollProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const innerRef = useRef<HTMLDivElement>(null);
+  const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth < 768);
+    check();
+    window.addEventListener("resize", check);
+    return () => window.removeEventListener("resize", check);
+  }, []);
+
+  useEffect(() => {
+    if (isMobile) return;
+
     const container = containerRef.current;
     const inner = innerRef.current;
     if (!container || !inner) return;
@@ -33,8 +43,20 @@ export default function HorizontalScroll({
 
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  }, [isMobile]);
 
+  // Mobile: horizontal snap scroll
+  if (isMobile) {
+    return (
+      <div className={className}>
+        <div className="flex overflow-x-auto snap-x snap-mandatory scrollbar-hide -webkit-overflow-scrolling-touch">
+          {children}
+        </div>
+      </div>
+    );
+  }
+
+  // Desktop: scroll-jacked horizontal scroll
   return (
     <div ref={containerRef} className={`relative ${className}`} style={{ height: "300vh" }}>
       <div className="sticky top-0 h-screen overflow-hidden flex items-center">
