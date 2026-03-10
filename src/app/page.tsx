@@ -112,24 +112,26 @@ export default function Home() {
 
       {/* Navigation */}
       <nav
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-          menuOpen ? "border-b-0" : "border-b-[3px] border-charcoal"
-        }`}
+        className="fixed top-0 left-0 right-0 z-50"
         style={{
+          borderBottom: menuOpen ? "none" : "3px solid var(--color-charcoal)",
           backgroundColor: menuOpen
             ? "transparent"
             : scrollY > 100
               ? "rgba(216, 211, 201, 0.95)"
               : "transparent",
           backdropFilter: !menuOpen && scrollY > 100 ? "blur(10px)" : "none",
+          transition: "background-color 0.5s ease, backdrop-filter 0.5s ease",
         }}
       >
         <div className="flex items-center justify-between px-5 md:px-10 py-4">
           <a
             href="#"
-            className={`text-sm md:text-lg relative z-[60] transition-colors duration-300 ${
-              menuOpen ? "text-bone" : "text-charcoal"
-            }`}
+            className="text-sm md:text-lg relative z-[60]"
+            style={{
+              color: menuOpen ? "var(--color-bone)" : "var(--color-charcoal)",
+              transition: "color 0.5s cubic-bezier(0.16, 1, 0.3, 1)",
+            }}
             onClick={() => menuOpen && setMenuOpen(false)}
           >
             <Logo />

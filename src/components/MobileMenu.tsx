@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 
 const links = [
   { label: "About", href: "#about" },
@@ -15,67 +15,63 @@ interface MobileMenuProps {
 }
 
 export default function MobileMenu({ open, setOpen }: MobileMenuProps) {
+  const scrollPos = useRef(0);
 
   useEffect(() => {
     if (open) {
-      document.body.style.overflow = "hidden";
-      document.body.style.position = "fixed";
-      document.body.style.width = "100%";
-      document.body.style.top = `-${window.scrollY}px`;
+      scrollPos.current = window.scrollY;
+      document.documentElement.style.overflow = "hidden";
     } else {
-      const scrollY = document.body.style.top;
-      document.body.style.overflow = "";
-      document.body.style.position = "";
-      document.body.style.width = "";
-      document.body.style.top = "";
-      if (scrollY) {
-        window.scrollTo(0, parseInt(scrollY || "0") * -1);
-      }
+      document.documentElement.style.overflow = "";
     }
     return () => {
-      document.body.style.overflow = "";
-      document.body.style.position = "";
-      document.body.style.width = "";
-      document.body.style.top = "";
+      document.documentElement.style.overflow = "";
     };
   }, [open]);
 
   return (
     <>
-      {/* Hamburger / X button — always above overlay */}
+      {/* Hamburger / X button */}
       <button
         onClick={() => setOpen(!open)}
-        className="md:hidden relative z-[60] flex flex-col justify-center items-center w-11 h-11 -mr-2"
+        className="md:hidden relative z-[60] w-11 h-11 -mr-2 flex items-center justify-center"
         aria-label={open ? "Close menu" : "Open menu"}
       >
-        <span
-          className={`block w-5 h-[2px] transition-all duration-300 origin-center ${
-            open
-              ? "bg-bone rotate-45 translate-y-[0px]"
-              : "bg-charcoal translate-y-[-4px]"
-          }`}
-        />
-        <span
-          className={`block w-5 h-[2px] bg-charcoal transition-all duration-300 ${
-            open ? "opacity-0 scale-x-0" : "opacity-100"
-          }`}
-        />
-        <span
-          className={`block w-5 h-[2px] transition-all duration-300 origin-center ${
-            open
-              ? "bg-bone -rotate-45 translate-y-[0px]"
-              : "bg-charcoal translate-y-[4px]"
-          }`}
-        />
+        {/* Lines are absolutely positioned and stacked in center */}
+        <div className="relative w-5 h-5 flex items-center justify-center">
+          <span
+            className="absolute w-5 h-[2px] transition-[transform,background-color] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]"
+            style={{
+              backgroundColor: open ? "var(--color-bone)" : "var(--color-charcoal)",
+              transform: open ? "rotate(45deg)" : "translateY(-4px)",
+            }}
+          />
+          <span
+            className="absolute w-5 h-[2px] transition-[opacity,background-color] duration-300 ease-[cubic-bezier(0.16,1,0.3,1)]"
+            style={{
+              backgroundColor: open ? "var(--color-bone)" : "var(--color-charcoal)",
+              opacity: open ? 0 : 1,
+            }}
+          />
+          <span
+            className="absolute w-5 h-[2px] transition-[transform,background-color] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]"
+            style={{
+              backgroundColor: open ? "var(--color-bone)" : "var(--color-charcoal)",
+              transform: open ? "rotate(-45deg)" : "translateY(4px)",
+            }}
+          />
+        </div>
       </button>
 
       {/* Fullscreen overlay */}
       <div
-        className={`fixed inset-0 z-[55] bg-charcoal md:hidden flex flex-col justify-center items-center transition-opacity duration-400 ${
-          open
-            ? "opacity-100 pointer-events-auto"
-            : "opacity-0 pointer-events-none"
-        }`}
+        className="fixed inset-0 z-[55] md:hidden flex flex-col justify-center items-center"
+        style={{
+          backgroundColor: "var(--color-charcoal)",
+          opacity: open ? 1 : 0,
+          pointerEvents: open ? "auto" : "none",
+          transition: "opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1)",
+        }}
       >
         <nav className="flex flex-col items-center gap-8">
           {links.map((link, i) => (
@@ -83,11 +79,13 @@ export default function MobileMenu({ open, setOpen }: MobileMenuProps) {
               key={link.label}
               href={link.href}
               onClick={() => setOpen(false)}
-              className="text-bone text-3xl font-black uppercase tracking-[0.15em] transition-all duration-500"
+              className="text-bone text-3xl font-black uppercase tracking-[0.15em]"
               style={{
                 opacity: open ? 1 : 0,
-                transform: open ? "translateY(0)" : "translateY(20px)",
-                transitionDelay: open ? `${0.1 + i * 0.06}s` : "0s",
+                transform: open ? "translateY(0)" : "translateY(16px)",
+                transition:
+                  "opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1), transform 0.5s cubic-bezier(0.16, 1, 0.3, 1)",
+                transitionDelay: open ? `${0.15 + i * 0.05}s` : "0s",
               }}
             >
               {link.label}
@@ -95,9 +93,10 @@ export default function MobileMenu({ open, setOpen }: MobileMenuProps) {
           ))}
         </nav>
         <div
-          className="absolute bottom-10 text-bone/30 text-[9px] tracking-[0.4em] uppercase text-center transition-all duration-500"
+          className="absolute bottom-10 text-bone/30 text-[9px] tracking-[0.4em] uppercase text-center"
           style={{
             opacity: open ? 1 : 0,
+            transition: "opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1)",
             transitionDelay: open ? "0.4s" : "0s",
           }}
         >
