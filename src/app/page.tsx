@@ -1,11 +1,11 @@
 "use client";
 
 import ScrollReveal from "@/components/ScrollReveal";
-import GlitchText from "@/components/GlitchText";
 import TextReveal from "@/components/TextReveal";
 import Counter from "@/components/Counter";
 import HorizontalScroll from "@/components/HorizontalScroll";
 import MobileMenu from "@/components/MobileMenu";
+import Logo from "@/components/Logo";
 import { useEffect, useState } from "react";
 
 function useMousePosition() {
@@ -118,8 +118,8 @@ export default function Home() {
         }}
       >
         <div className="flex items-center justify-between px-5 md:px-10 py-4">
-          <a href="#" className="text-xs md:text-sm tracking-[0.3em] uppercase font-black relative z-50">
-            <GlitchText text="blankhaus" />
+          <a href="#" className="text-sm md:text-lg relative z-50">
+            <Logo />
           </a>
           {/* Desktop nav */}
           <div className="hidden md:flex gap-10 text-[11px] tracking-[0.25em] uppercase">
@@ -667,11 +667,9 @@ export default function Home() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-12">
             <div>
               <ScrollReveal>
-                <h2 className="text-3xl md:text-6xl font-black uppercase tracking-tight leading-[0.85] mb-4 md:mb-8">
-                  blank
-                  <br />
-                  <span className="italic font-serif font-normal text-2xl md:text-5xl">haus</span>
-                </h2>
+                <div className="mb-4 md:mb-8">
+                  <Logo stacked className="text-4xl md:text-6xl" />
+                </div>
                 <p className="text-[8px] md:text-[9px] tracking-[0.3em] md:tracking-[0.4em] uppercase text-bone/30 leading-[2]">
                   Cut and Sewn Blanks
                   <br />
